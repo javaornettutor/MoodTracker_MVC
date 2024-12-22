@@ -17,10 +17,7 @@ namespace MoodTracker_MVC.Controllers
         {
             _context = context;
         }
-        public async Task<IActionResult> Data()
-        {
-            return Json(await _context.Moods.ToListAsync());
-        }
+
         // GET: Moods
         public async Task<IActionResult> Index()
         {
