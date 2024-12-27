@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MoodTracker_MVC.Models;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace MoodTracker_MVC.Controllers
 {
@@ -27,7 +30,7 @@ namespace MoodTracker_MVC.Controllers
 
         // GET: api/Moods/5
         [HttpGet("GetMood")]
-        public async Task<ActionResult<Mood>> GetMood(int id)
+        public async Task<IActionResult> GetMood(int id)
         {
             var mood = await _context.Moods.FindAsync(id);
 
@@ -35,8 +38,8 @@ namespace MoodTracker_MVC.Controllers
             {
                 return NotFound();
             }
-
-            return Ok(mood);
+            string jsonString = JsonSerializer.Serialize(mood);
+            return Ok(jsonString);
         }
 
         // POST: api/Moods
@@ -59,11 +62,6 @@ namespace MoodTracker_MVC.Controllers
         [HttpPut("UpdateMood")]
         public async Task<IActionResult> UpdateMood(int id, Mood mood)
         {
-            if (id != mood.MoodId)
-            {
-                return BadRequest("Mood ID mismatch.");
-            }
-
             if (ModelState.IsValid)
             {
                 _context.Entry(mood).State = EntityState.Modified;
@@ -84,7 +82,7 @@ namespace MoodTracker_MVC.Controllers
                     }
                 }
 
-                return NoContent(); // 204 No Content on successful update
+                return Ok();// NoContent(); // 204 No Content on successful update
             }
 
             return BadRequest(ModelState);

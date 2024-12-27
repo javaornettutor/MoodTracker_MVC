@@ -89,11 +89,7 @@ public partial class MoodTracker2Context : DbContext
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
             entity.Property(e => e.MoodComments).HasMaxLength(255);
-
-            entity.HasOne(d => d.MoodTypeNavigation).WithMany(p => p.UserMoods)
-                .HasForeignKey(d => d.MoodType)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_UserMood_Mood");
+            
         });
 
         OnModelCreatingPartial(modelBuilder);

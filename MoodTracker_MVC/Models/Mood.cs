@@ -13,5 +13,5 @@ public partial class Mood
 
     public DateTime? CreatedAt { get; set; }
 
-    public virtual ICollection<UserMood> UserMoods { get; set; } = new List<UserMood>();
+//    public virtual ICollection<UserMood> UserMoods { get; set; } = new List<UserMood>();
 }
