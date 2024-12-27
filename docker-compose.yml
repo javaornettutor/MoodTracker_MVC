@@ -1,0 +1,6 @@
+services:
+  moodtracker_mvc:
+    image: ${DOCKER_REGISTRY-}moodtrackermvc
+    build:
+      context: MoodTracker_MVC
+      dockerfile: Dockerfile
